@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 AUTHOR = 'Tutov Evgenii'
 SITENAME = 'yet another it blog'
-SITEURL = ''
+SITEURL = 'https://ordinary-developer.github.io'
 
 PATH = 'content'
 
@@ -33,4 +33,4 @@ DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
-DISQUS_SITENAME = "ordinary-developer"
+DISQUS_SITENAME = "ordinary-developer-github-io"
