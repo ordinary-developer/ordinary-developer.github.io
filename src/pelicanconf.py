@@ -12,7 +12,7 @@ TIMEZONE = 'Europe/Moscow'
 
 DEFAULT_LANG = 'en'
 
-DISQUS_SITENAME = "merely-ordinary-developer-github-io"
+DISQUS_SITENAME = 'ordinary-developer-github-io'
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
