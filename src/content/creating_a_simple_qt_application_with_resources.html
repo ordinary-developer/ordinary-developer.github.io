@@ -1,0 +1,81 @@
+<html>
+<head>  
+  <title>Creating a simple at application with resources</title>
+  <meta name="tags" content="without category" />
+  <meta name="date" content="2018-12-21 21:43" />
+  <meta name="modified" content="2018-12-21 21:43" />
+  <meta name="category" content="information" />
+  <meta name="authors" content="Tutov Yevgeni" />
+  <meta name="summary" content="Creating a simple at application with resources" />
+</head>
+<body>
+  <h1>Creating a simple qt application</h1>
+
+  <p align="justify">This post begins a series of posts about Qt (Qt 5). Here a creation of a simple qt application (from scratch) will be described.</p>
+  <p align="justify">So we have an app (in main.cpp):</p>
+  <pre>
+  #include <QtWidgets>
+
+  int main(int argc, char** argv) {
+      QApplication app{argc, argv};
+      QWidget widget{};
+
+      QWidget* childWidget1{ new QWidget{&widget} };
+      QPalette palette1{};
+      palette1.setColor(childWidget1->backgroundRole(), Qt::blue);
+      childWidget1->setPalette(palette1);
+      childWidget1->resize(100, 100);
+      childWidget1->move(25, 25);
+      childWidget1->setAutoFillBackground(true);
+
+      QWidget* childWidget2{new QWidget{&widget}};
+      QPalette palette2{};
+      palette2.setBrush(childWidget2->backgroundRole(), 
+                        QBrush{QPixmap{":/image.jpg"}});
+      childWidget2->setPalette(palette2);
+      childWidget2->resize(100, 100);
+      childWidget2->move(75, 75);
+      childWidget2->setAutoFillBackground(true);
+
+      widget.resize(200, 200);
+      widget.show();
+
+      return app.exec();
+  }
+  </pre>
+  <p align="justify">First we must create a resoure file (let it be an images.qrc)</p>
+  <pre>
+    <!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+      <file alias="image.jpg">images/image.jpg</file>
+    </qresource>
+    </RCC>
+  </pre>
+
+  <p>and of course, a Folder "images" must exist.</p>
+
+  <p>But to compile it and get a binary file we must perform the next steps:
+    <ol>
+      <li>enter the project directory<br> <pre>$ cd project_dir</pre></li>
+      <li>run: <br> <pre>$ qmake -project</pre></li>
+      <li>after that a pro-file with the name of directory will be generated add the next strings to this file: <br>
+         <pre>
+           QT += widgets
+           QMAKE_CXXFLAGS += -std=c++17 -Wall -Wextra -pedantic</li>
+           RESOURCES = images.qrc
+         </pre>
+         (if you want to compile by another compiler (not gcc) specify your own parameters)
+      </li>
+      <li>After that run the next command to create a makefile: <br> 
+          <pre>$ qmake</pre>
+      </li>
+      <li>After that run the next command:
+        <pre>$ make</pre><br>
+        for parallel compiling run:<br><pre>$ make --jobs 4</pre>
+      </li>
+    </ol>
+  </p>
+
+
+</body>
+</html>

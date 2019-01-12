@@ -1,0 +1,52 @@
+<html>
+<head>  
+  <title>A useful approach to a collection of objects</title>
+  <meta name="tags" content="without category" />
+  <meta name="date" content="2018-07-22 21:15" />
+  <meta name="modified" content="2018-07-22 21:15" />
+  <meta name="category" content="information" />
+  <meta name="authors" content="Tutov Yevgeni" />
+  <meta name="summary" content="A useful approach to a collection of objects" />
+</head>
+<body>
+  <h1>A useful approach to a collection of objects.</h1>
+
+  <p align="justify">Let's suppose that we have a collection of object (for example in an arbitrary class). All examples will be in C++.</p>
+  <p align="justify">We can write it as follows:</p>
+  <p><pre>
+  class Object { };
+
+  class MyClass {
+      public:
+          MyClass(std::vector<Object> const& objects)
+              : objects_{ objects } {}
+
+      private:
+          std::vector<Object> objects_;
+  };  
+  </pre></p>
+
+  <p align="justify">We can use a vector, but what if sometimes we shall need to change the vector struct to something other. In this case, we must change all signatures and all callings where a vector of objects is used.</p>
+  <p align="justify">So it is better to synthesize an additional entity that encapsulates internal object storing.For instance:</p>
+  <pre>
+  class Object { };
+
+  struct Objects {
+      private:
+          std::vector<Object> objects_;
+  };
+
+  class MyClass {
+      public:
+          MyClass(Objects const& objects)
+              : objects_{ objects } {}         
+
+      private:
+          Objects objects_;
+  };
+  </pre>
+
+  <p align="justify">Of course here copy constructor for the Object class must be defined. And of course, you can use smart pointers or store the Objects class by reference instead of using it by value.</p>
+  <p align="justify">This approach gives us a significant benefit: we can change the internal structure of the Objects class without changing its interface.</p>
+</body>
+</html>

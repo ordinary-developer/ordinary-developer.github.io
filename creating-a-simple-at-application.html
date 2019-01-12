@@ -10,7 +10,7 @@
   <meta name="description" content="Posts and writings by Tutov Evgeni">
   <title>
     yet another it blog
-&ndash; The first post  </title>
+&ndash; Creating a simple at application  </title>
 
   <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="./theme/images/logo.png">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" type="text/css" href="./theme/css/custom.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   
-<meta name="keywords" content="general">
+<meta name="keywords" content="without category">
 </head>
 <body>
   <div class="container">
@@ -66,48 +66,69 @@ Follow me:
 
     <div class="eleven columns content">
   <p class="meta">
-    15 August 2017
+    23 November 2018
     <a href="/">
       <i class="home fa fa-home"></i>
     </a>
   </p>
 
-  <h1 class="title"><a href="./the-first-post.html">The first post</a></h1>
+  <h1 class="title"><a href="./creating-a-simple-at-application.html">Creating a simple at application</a></h1>
   
   <div class="article_text" id="post">
     
-        <p align="justify">
-            Here I shall post some notes about software development
-            in whole and about programming (C++, Python, etc.) in
-            particular. My English is not so perfect, so my posts
-            will not be long. Hope, sooner or later my English will
-            be improved and my posts will become longer and more
-            interesting.
-        </p>
-        <p align="justify">
-            And meanwhile this blog will be just a set of usefull
-            references.
-        </p>
-        <p align="justify">
-            If you have spotted any mistakes in my text, please
-            write about them in commentaries.
-        </p>
-    
+  <h1>Creating a simple qt application</h1>
+
+  <p align="justify">This post begins a series of posts about Qt (Qt 5). Here a creation of a simple qt application (from scratch) will be described.</p>
+  <p align="justify">So we have an app (in main.cpp):</p>
+  <pre>
+  #include <qtwidgets>
+
+  int main(int argc, char** argv) {
+      QApplication app{ argc, argv };
+      QLabel label{ "Hello world!" };
+      label.show();
+      return app.exec();
+  }
+  </pre>
+
+  <p>But to compile it and get a binary file we must perform the next steps:
+    <ol>
+      <li>enter the project directory<br> <pre>$ cd project_dir</pre></li>
+      <li>run: <br> <pre>$ qmake -project</pre></li>
+      <li>after that a pro-file with the name of directory will be generated add the next strings to this file: <br>
+         <pre>
+           QT += widgets
+           QMAKE_CXXFLAGS += -std=c++17 -Wall -Wextra -pedantic</li>
+         </pre>
+         (if you want to compile by another compiler (not gcc) specify your own parameters)
+      </li>
+      <li>After that run the next command to create a makefile: <br> 
+          <pre>$ qmake</pre>
+      </li>
+      <li>After that run the next command:
+        <pre>$ make</pre><br>
+        for parallel compiling run:<br><pre>$ make --jobs 4</pre>
+      </li>
+    </ol>
+  </p>
+
+
+
   </div>
 
   <div class="article_meta related">
     <h3>Category: </h3>
-    <span><a href="./category/common.html">common</span>
+    <span><a href="./category/information.html">information</span>
     
     <h3>Tags:</h3>
     <span>
-      <a href="./tag/general.html">general</a>    </span>
+      <a href="./tag/without-category.html">without category</a>    </span>
   </div>
 
   <div id="article_comments comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-        var disqus_identifier = "the-first-post.html";
+        var disqus_identifier = "creating-a-simple-at-application.html";
         (function() {
              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
              dsq.src = '//ordinary-developer-github-io.disqus.com/embed.js';

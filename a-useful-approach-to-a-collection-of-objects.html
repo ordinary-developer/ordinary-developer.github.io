@@ -10,7 +10,7 @@
   <meta name="description" content="Posts and writings by Tutov Evgeni">
   <title>
     yet another it blog
-&ndash; The first post  </title>
+&ndash; A useful approach to a collection of objects  </title>
 
   <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="./theme/images/logo.png">
@@ -19,7 +19,7 @@
   <link rel="stylesheet" type="text/css" href="./theme/css/custom.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
   
-<meta name="keywords" content="general">
+<meta name="keywords" content="without category">
 </head>
 <body>
   <div class="container">
@@ -66,48 +66,71 @@ Follow me:
 
     <div class="eleven columns content">
   <p class="meta">
-    15 August 2017
+    22 July 2018
     <a href="/">
       <i class="home fa fa-home"></i>
     </a>
   </p>
 
-  <h1 class="title"><a href="./the-first-post.html">The first post</a></h1>
+  <h1 class="title"><a href="./a-useful-approach-to-a-collection-of-objects.html">A useful approach to a collection of objects</a></h1>
   
   <div class="article_text" id="post">
     
-        <p align="justify">
-            Here I shall post some notes about software development
-            in whole and about programming (C++, Python, etc.) in
-            particular. My English is not so perfect, so my posts
-            will not be long. Hope, sooner or later my English will
-            be improved and my posts will become longer and more
-            interesting.
-        </p>
-        <p align="justify">
-            And meanwhile this blog will be just a set of usefull
-            references.
-        </p>
-        <p align="justify">
-            If you have spotted any mistakes in my text, please
-            write about them in commentaries.
-        </p>
-    
+  <h1>A useful approach to a collection of objects.</h1>
+
+  <p align="justify">Let's suppose that we have a collection of object (for example in an arbitrary class). All examples will be in C++.</p>
+  <p align="justify">We can write it as follows:</p>
+  <p><pre>
+  class Object { };
+
+  class MyClass {
+      public:
+          MyClass(std::vector<object> const& objects)
+              : objects_{ objects } {}
+
+      private:
+          std::vector<object> objects_;
+  };  
+  </pre></p>
+
+  <p align="justify">We can use a vector, but what if sometimes we shall need to change the vector struct to something other. In this case, we must change all signatures and all callings where a vector of objects is used.</p>
+  <p align="justify">So it is better to synthesize an additional entity that encapsulates internal object storing.For instance:</p>
+  <pre>
+  class Object { };
+
+  struct Objects {
+      private:
+          std::vector<object> objects_;
+  };
+
+  class MyClass {
+      public:
+          MyClass(Objects const& objects)
+              : objects_{ objects } {}         
+
+      private:
+          Objects objects_;
+  };
+  </pre>
+
+  <p align="justify">Of course here copy constructor for the Object class must be defined. And of course, you can use smart pointers or store the Objects class by reference instead of using it by value.</p>
+  <p align="justify">This approach gives us a significant benefit: we can change the internal structure of the Objects class without changing its interface.</p>
+
   </div>
 
   <div class="article_meta related">
     <h3>Category: </h3>
-    <span><a href="./category/common.html">common</span>
+    <span><a href="./category/information.html">information</span>
     
     <h3>Tags:</h3>
     <span>
-      <a href="./tag/general.html">general</a>    </span>
+      <a href="./tag/without-category.html">without category</a>    </span>
   </div>
 
   <div id="article_comments comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
-        var disqus_identifier = "the-first-post.html";
+        var disqus_identifier = "a-useful-approach-to-a-collection-of-objects.html";
         (function() {
              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
              dsq.src = '//ordinary-developer-github-io.disqus.com/embed.js';

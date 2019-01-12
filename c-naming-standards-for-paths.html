@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Tutov Evgeni">
+  <meta name="description" content="Posts and writings by Tutov Evgeni">
+  <title>
+    yet another it blog
+&ndash; C++ naming standards for paths  </title>
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="./theme/images/logo.png">
+
+  <link rel="stylesheet" type="text/css" href="./theme/css/all.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/custom.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  
+<meta name="keywords" content="c++">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+<nav>
+  <h1>Hi.</h1>
+  <a href="./">
+    <img src="./theme/images/logo.jpg" id="gravatar" alt="My photo"/>
+  </a>
+  <h2><a href="./">I'm Tutov Evgeni</a></h2>
+
+  <div id="bio">
+    <p></p>
+  </div>
+
+  <div id="social">
+Follow me:
+<div id="stalker">
+
+
+  <a title="ordinary-developer on Github" href="https://github.com/ordinary-developer">
+    <i class="fa fa-github"></i>
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>  </div>
+
+  <div id="tags">
+    <ul>
+      </ul>
+  </div>
+</nav>    </div>
+
+    <div class="eleven columns content">
+  <p class="meta">
+    11 February 2018
+    <a href="/">
+      <i class="home fa fa-home"></i>
+    </a>
+  </p>
+
+  <h1 class="title"><a href="./c-naming-standards-for-paths.html">C++ naming standards for paths</a></h1>
+  
+  <div class="article_text" id="post">
+    
+  <h1>C++ naming standards for paths</h1>
+  <h2>Commont thoughts about the theme</h2>
+  <p align="justify">Very often tasks such as function and variable naming for work with paths (files, directories etc.) can be arisen. 
+  <a href="https://stackoverflow.com/questions/2235173/file-name-path-name-base-name-naming-standard-for-pieces-of-a-path">Here</a> is a question in SO.</p>
+  <p align="justify">I'll try to write shortly about these name conventions (that are convenient for me).</p>
+  <p align="justify">Let's suppose that we have the next paths:</p>
+  <p>Windows: <i>c:\users\user\widget\foo.src</i></p>
+  <p>Posix: <i>/users/user/widget/foo.src</i></p>
+  <table>
+    <tr>
+      <td>Part</td>
+      <td>Windows</td>
+      <td>Posix</td>
+    </tr>
+    <tr>
+      <td><b>full_path</b> (abosolute_path, full_filename)</td>
+      <td>c:\users\user\widget\foo.src</td>
+      <td>/users/user/widget/foo.src</td>
+    </tr>
+    <tr>
+      <td><b>filename</b></td>
+      <td>foo.src</td>
+      <td>foo.src</td>
+    </tr>
+    <tr>
+      <td><b>basename</b></td>
+      <td>foo</td>
+      <td>foo</td>      
+    </tr>
+    <tr>
+      <td><b>fileext</b> (filename_ext)</td>
+      <td>src</td>
+      <td>src</td>
+    </tr>
+    <tr>
+      <td><b>dirpath</b> (parentpath)</td>
+      <td>c:\users\user\widget</td>
+      <td>/users/user/widget</td>
+    </tr>
+    <tr>
+      <td><b>dirname</b> (parentname)</td>
+      <td>widget</td>
+      <td>widget</td>
+    </td>
+    <tr>
+      <td><b>rootpath</b></td>
+      <td>c:\</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td><b>volumename</b></td>
+      <td>c</td>
+      <td>&lt;empty&gt;</td>
+    </tr>
+  </table>
+  <hr />
+
+  <h2>Qt approach</h2>
+  <p>The <a href="http://doc.qt.io/qt-5/qfileinfo.html">QFileInfo</a>class has some methods: absoluteFilePath(), baseName(), fileName() etc. The <a href="http://doc.qt.io/qt-5/qdir.html">QDir</a> class has the rootPath() and root() methods and the <a href="http://doc.qt.io/qt-5/qfile.html">QFile</a> class has some usefull methods.</p>
+  <p>According to this class we can make the next suggestions:</p>
+  <p align="justify">Let's suppose that we have the next paths:</p>
+  <p>Windows: <i>c:\users\user\widget\foo.src</i></p>
+  <p>Posix: <i>/users/user/widget/foo.src</i></p>
+  <table>
+    <tr>
+      <td>Part</td>
+      <td>Windows</td>
+      <td>Posix</td>
+    </tr>
+    <tr>
+      <td><b>absolute_path</b> (abosolute_path, full_filename)</td>
+      <td>c:\users\user\widget\foo.src</td>
+      <td>/users/user/widget/foo.src</td>
+    </tr>
+    <tr>
+      <td><b>filename</b></td>
+      <td>foo.src</td>
+      <td>foo.src</td>
+    </tr>
+    <tr>
+      <td><b>basename</b></td>
+      <td>foo</td>
+      <td>foo</td>      
+    </tr>
+    <tr>
+      <td>?</td>
+      <td>src</td>
+      <td>src</td>
+    </tr>
+    <tr>
+      <td><b>absolute_dir</b> (dir)</td>
+      <td>c:\users\user\widget</td>
+      <td>/users/user/widget</td>
+    </tr>
+    <tr>
+      <td>?</td>
+      <td>widget</td>
+      <td>widget</td>
+    </td>
+    <tr>
+      <td><b>rootpath</b></td>
+      <td>c:\</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td><b>?</b></td>
+      <td>c</td>
+      <td>&lt;empty&gt;</td>
+    </tr>
+  </table>
+  <hr />
+
+  <h2>Everything is made up for us</h2>
+  <p align="justify">But may be it is better to use Boost.FileSystem (since cpp17 it is availible in std::filesystem). Boost.FileSystem (std::filesystem) has the next name conventions.</p>
+  <p align="justify">Let's suppose we have the next paths:</p>
+  <p align="justify">Windows path: <i>c:\foo\bar\baa.txt</i></p>
+  <p align="justify">Posix path: <i>/foo/bar/baa.txt</i></p>
+  <table>
+    <tr>
+      <td>Part</td>
+      <td>Windows</td>
+      <td>Posix</td>
+    </tr>
+    <tr>
+      <td><b>Root name</b></td>
+      <td>c:</td>
+      <td>&lt;empty&gt;</td>
+    </tr>
+    <tr>
+      <td><b>Root directory</b></td>
+      <td>\</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td><b>Root path</b></td>
+      <td>c:\</td>
+      <td>/</cd>
+    </tr>
+    <tr>
+      <td><b>Relative path</b></td>
+      <td>foo\bar\baa.txt</td>
+      <td>foo/bar/baa.txt</td>
+    </tr>
+    <tr>
+      <td><b>Parent path</b></td>
+      <td>c:\foo\bar</td>
+      <td>/foo/bar</td>
+    </tr>
+    <tr>
+      <td><b>Filename</b></td>
+      <td>baa.txt</td>
+      <td>baa.txt</td>
+    </tr>
+    <tr>
+      <td><b>Stem</b></td>
+      <td>baa</td>
+      <td>baa</td>
+    </tr>
+    <tr>
+      <td><b>Extension</b></td>
+      <td>.txt</td>
+      <td>.txt</td>
+    </tr>
+  </table>
+  <p align="justify">And we can add the next item: (added by me)</p>
+  <table>
+    <tr>
+      <td>Part</td><td>Windows</td><td>Posix</td>
+    </tr>
+    <tr>
+      <td><b>Fullpath</b></td>
+      <td>c:\foo\bar\baa.txt</td>
+      <td>/foo/bar/baa.txt</td>
+    </tr>
+  </table>
+
+  </div>
+
+  <div class="article_meta related">
+    <h3>Category: </h3>
+    <span><a href="./category/information.html">information</span>
+    
+    <h3>Tags:</h3>
+    <span>
+      <a href="./tag/c.html">c++</a>    </span>
+  </div>
+
+  <div id="article_comments comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "c-naming-standards-for-paths.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = '//ordinary-developer-github-io.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+
+      <div class="footer">
+<div class="disclaimer">
+  
+    <p>
+      © Tutov Evgeni,  &mdash; built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="https://github.com/karambir/taman" target="_blank">Taman</a>, a port of jekyll theme <a href="https://github.com/swanson/lagom" target="_blank">Lagom</a>.
+    </p>
+  </div>      </div>
+    </div>
+  </div>
+
+</body>
+</html>

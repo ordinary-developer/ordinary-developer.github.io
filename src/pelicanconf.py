@@ -2,11 +2,11 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'Tutov Evgenii'
+AUTHOR = 'Tutov Evgeni'
 SITENAME = 'yet another it blog'
 SITEURL = 'https://ordinary-developer.github.io'
 
-THEME = '/home/ivan/my_data/my_blog/themes/taman'
+THEME = '/home/ivan/repos/ordinary-developer.github.io/themes/taman'
 PELICAN_SOBER_ABOUT = 'Software developer, Russia'
 
 PATH = 'content'
