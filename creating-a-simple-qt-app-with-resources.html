@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Tutov Yevgeni">
+  <meta name="description" content="Posts and writings by Tutov Yevgeni">
+  <title>
+    yet another it blog
+&ndash; Creating a simple Qt app with resources  </title>
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="./theme/images/logo.png">
+
+  <link rel="stylesheet" type="text/css" href="./theme/css/all.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/custom.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  
+<meta name="keywords" content="Qt, C++">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+<nav>
+  <h1>Hi.</h1>
+  <a href="./">
+    <img src="./theme/images/logo.jpg" id="gravatar" alt="My photo"/>
+  </a>
+  <h2><a href="./">I'm Tutov Yevgeni</a></h2>
+
+  <div id="bio">
+    <p></p>
+  </div>
+
+  <div id="social">
+Follow me:
+<div id="stalker">
+
+
+  <a title="ordinary-developer on Github" href="https://github.com/ordinary-developer">
+    <i class="fa fa-github"></i>
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>  </div>
+
+  <div id="tags">
+    <ul>
+      </ul>
+  </div>
+</nav>    </div>
+
+    <div class="eleven columns content">
+  <p class="meta">
+    21 December 2018
+    <a href="/">
+      <i class="home fa fa-home"></i>
+    </a>
+  </p>
+
+  <h1 class="title"><a href="./creating-a-simple-qt-app-with-resources.html">Creating a simple Qt app with resources</a></h1>
+  
+  <div class="article_text" id="post">
+    <p>This post describes creation of a simple qt application with resources from scratch.
+The code here is not very dificult,
+but this post mainly shows neccessary console commands for building an application.</p>
+<p>Let's suppose we have a main file:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;QtWidgets&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">QApplication</span> <span class="n">app</span><span class="p">{</span><span class="n">argc</span><span class="p">,</span> <span class="n">argv</span><span class="p">};</span>
+    <span class="n">QWidget</span> <span class="n">widget</span><span class="p">{};</span>
+
+    <span class="n">QWidget</span><span class="o">*</span> <span class="n">childWidget1</span><span class="p">{</span> <span class="n">new</span> <span class="n">QWidget</span><span class="p">{</span><span class="o">&amp;</span><span class="n">widget</span><span class="p">}</span> <span class="p">};</span>
+    <span class="n">QPalette</span> <span class="n">palette1</span><span class="p">{};</span>
+    <span class="n">palette1</span><span class="p">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">childWidget1</span><span class="o">-&gt;</span><span class="n">backgroundRole</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">::</span><span class="n">blue</span><span class="p">);</span>
+    <span class="n">childWidget1</span><span class="o">-&gt;</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette1</span><span class="p">);</span>
+    <span class="n">childWidget1</span><span class="o">-&gt;</span><span class="n">resize</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+    <span class="n">childWidget1</span><span class="o">-&gt;</span><span class="n">move</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">25</span><span class="p">);</span>
+    <span class="n">childWidget1</span><span class="o">-&gt;</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+    <span class="n">QWidget</span><span class="o">*</span> <span class="n">childWidget2</span><span class="p">{</span><span class="n">new</span> <span class="n">QWidget</span><span class="p">{</span><span class="o">&amp;</span><span class="n">widget</span><span class="p">}};</span>
+    <span class="n">QPalette</span> <span class="n">palette2</span><span class="p">{};</span>
+    <span class="n">palette2</span><span class="p">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">childWidget2</span><span class="o">-&gt;</span><span class="n">backgroundRole</span><span class="p">(),</span> 
+                      <span class="n">QBrush</span><span class="p">{</span><span class="n">QPixmap</span><span class="p">{</span><span class="s">&quot;:/image.jpg&quot;</span><span class="p">}});</span>
+    <span class="n">childWidget2</span><span class="o">-&gt;</span><span class="n">setPalette</span><span class="p">(</span><span class="n">palette2</span><span class="p">);</span>
+    <span class="n">childWidget2</span><span class="o">-&gt;</span><span class="n">resize</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">);</span>
+    <span class="n">childWidget2</span><span class="o">-&gt;</span><span class="n">move</span><span class="p">(</span><span class="mi">75</span><span class="p">,</span> <span class="mi">75</span><span class="p">);</span>
+    <span class="n">childWidget2</span><span class="o">-&gt;</span><span class="n">setAutoFillBackground</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+    <span class="n">widget</span><span class="p">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">);</span>
+    <span class="n">widget</span><span class="p">.</span><span class="n">show</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="n">app</span><span class="p">.</span><span class="n">exec</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>First we must create a resoure file (let it be an images.qrc)</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE RCC&gt;</span><span class="nt">&lt;RCC</span> <span class="na">version=</span><span class="s">&quot;1.0&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;qresource&gt;</span>
+    <span class="nt">&lt;file</span> <span class="na">alias=</span><span class="s">&quot;image.jpg&quot;</span><span class="nt">&gt;</span>images/image.jpg<span class="nt">&lt;/file&gt;</span>
+<span class="nt">&lt;/qresource&gt;</span>
+<span class="nt">&lt;/RCC&gt;</span>
+</pre></div>
+
+
+<p>To compile it and get a binary file we must perform the next steps:</p>
+<ul>
+<li>Enter the project directory:</li>
+</ul>
+<div class="highlight"><pre><span></span>$ <span class="nb">cd</span> project_dir
+</pre></div>
+
+
+<ul>
+<li>Run:</li>
+</ul>
+<div class="highlight"><pre><span></span>$ qmake -project
+</pre></div>
+
+
+<ul>
+<li>After that a pro-file with the name equal to the parent directory name will be generated, add the next strings to this file:</li>
+</ul>
+<div class="highlight"><pre><span></span>QT += widgets
+QMAKE_CXXFLAGS += -std=c++17 -Wall -Wextra -pedantic
+RESOURCES = images.qrc
+</pre></div>
+
+
+<p>(if you want to compile your code with other parameters specify your own parameters)</p>
+<ul>
+<li>After that run the next command to create a makefile:</li>
+</ul>
+<div class="highlight"><pre><span></span>$ qmake
+</pre></div>
+
+
+<ul>
+<li>After that run the next command:</li>
+</ul>
+<div class="highlight"><pre><span></span>$ make
+</pre></div>
+
+
+<p>for parallel compiling run:</p>
+<div class="highlight"><pre><span></span>$ make --jobs <span class="m">4</span>
+</pre></div>
+  </div>
+
+  <div class="article_meta related">
+    <h3>Category: </h3>
+    <span><a href="./category/qt.html">Qt</span>
+    
+    <h3>Tags:</h3>
+    <span>
+      <a href="./tag/qt.html">Qt</a>,      <a href="./tag/c.html">C++</a>    </span>
+  </div>
+
+  <div id="article_comments comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "creating-a-simple-qt-app-with-resources.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = '//ordinary-developer-github-io.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+
+      <div class="footer">
+<div class="disclaimer">
+  
+    <p>
+      © Tutov Yevgeni,  &mdash; built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="https://github.com/karambir/taman" target="_blank">Taman</a>, a port of jekyll theme <a href="https://github.com/swanson/lagom" target="_blank">Lagom</a>.
+    </p>
+  </div>      </div>
+    </div>
+  </div>
+
+</body>
+</html>

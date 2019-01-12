@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'Tutov Evgeni'
+AUTHOR = 'Tutov Yevgeni'
 SITENAME = 'yet another it blog'
 SITEURL = 'https://ordinary-developer.github.io'
 
