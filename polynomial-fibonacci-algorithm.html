@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Tutov Yevgeni">
+  <meta name="description" content="Posts and writings by Tutov Yevgeni">
+  <title>
+    yet another it blog
+&ndash; Polynomial Fibonacci algorithm  </title>
+
+  <link href="//fonts.googleapis.com/css?family=Open+Sans:600,800" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="./theme/images/logo.png">
+
+  <link rel="stylesheet" type="text/css" href="./theme/css/all.css">
+  <link rel="stylesheet" type="text/css" href="./theme/css/custom.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  
+<meta name="keywords" content="algorithms, C">
+</head>
+<body>
+  <div class="container">
+    <div class="four columns sidebar">
+<nav>
+  <h1>Hi.</h1>
+  <a href="./">
+    <img src="./theme/images/logo.jpg" id="gravatar" alt="My photo"/>
+  </a>
+  <h2><a href="./">I'm Tutov Yevgeni</a></h2>
+
+  <div id="bio">
+    <p></p>
+  </div>
+
+  <div id="social">
+Follow me:
+<div id="stalker">
+
+
+  <a title="ordinary-developer on Github" href="https://github.com/ordinary-developer">
+    <i class="fa fa-github"></i>
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>  </div>
+
+  <div id="tags">
+    <ul>
+      </ul>
+  </div>
+</nav>    </div>
+
+    <div class="eleven columns content">
+  <p class="meta">
+    26 January 2019
+    <a href="/">
+      <i class="home fa fa-home"></i>
+    </a>
+  </p>
+
+  <h1 class="title"><a href="./polynomial-fibonacci-algorithm.html">Polynomial Fibonacci algorithm</a></h1>
+  
+  <div class="article_text" id="post">
+    <p>Here I'll try to write a post devoted to CS.
+Here an implementation for polynomial Fibonacci algorithm will be posted.</p>
+<p>All examples below are based on the book "Algorithms" by Sanjoy Dasgupta, Christos H. Papadimitriou, Umesh Vazirani (ISBN-13: 978-0073523408,  ISBN-10: 9780073523408).</p>
+<p>All examples below will be written in the C programming language as a lingua franca in programming.</p>
+<p>According to the above-mention book, Fibonacci sequence is a sequence of numbers each the sum of its two immediate predecessors. 
+It can be written as (according to a book)
+<img alt="fibonacci sequence" src="./images/fib_seq.png"></p>
+<p>The naive implementation of the Fibonacci algorithm is exponential in n (More formally fib = O(n * Fn), again, according to the book).</p>
+<p>But a polynomial implementation has only the quadratic time complexity, that is more appropriate for practical tasks.</p>
+<p>It can be realized as follows:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+
+<span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">fib</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// memory allocation</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">p_fib_values</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p_fib_values</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+    <span class="c1">// alg body</span>
+    <span class="n">p_fib_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">p_fib_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> 
+        <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">];</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+
+    <span class="c1">// memory deallocation</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">p_fib_values</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="n">fib</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="n">fib</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">55</span> <span class="o">==</span> <span class="n">fib</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Such an approach assumes that if a memory allocation fails, the result is 0. Sometimes a user wants a more explicit error alerting mechanism.</p>
+<p>First, we can transform the underlying type from "unsigned int" to "int" (which is signed). So we can write:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">fib</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// memory allocation</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">int</span><span class="o">*</span> <span class="n">p_fib_values</span> <span class="o">=</span> <span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p_fib_values</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="c1">// alg body</span>
+    <span class="n">p_fib_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">p_fib_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> 
+        <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">];</span>
+    <span class="k">const</span> <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+
+    <span class="c1">// memory deallocation</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">p_fib_values</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="n">fib</span><span class="p">(</span><span class="mi">0</span><span class="p">));</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="n">fib</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">55</span> <span class="o">==</span> <span class="n">fib</span><span class="p">(</span><span class="mi">10</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>And there is another way - we can synthesize an artificial entity for storing the result of an operation:</p>
+<div class="highlight"><pre><span></span><span class="k">typedef</span> <span class="k">struct</span> <span class="n">Result</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">was_error</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>    
+<span class="p">}</span> <span class="n">Result</span><span class="p">;</span>
+</pre></div>
+
+
+<p>Then all code can be written like the follows:</p>
+<div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;assert.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp"></span>
+
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">Result</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">was_error</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">value</span><span class="p">;</span>    
+<span class="p">}</span> <span class="n">Result</span><span class="p">;</span>
+
+<span class="n">Result</span> <span class="nf">fib</span><span class="p">(</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Result</span> <span class="n">result</span> <span class="o">=</span> <span class="p">{</span> <span class="p">.</span><span class="n">was_error</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">};</span>
+
+    <span class="c1">// memory allocation</span>
+    <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span> <span class="n">p_fib_values</span> <span class="o">=</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p_fib_values</span><span class="p">)</span> 
+        <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+
+    <span class="c1">// alg body</span>
+    <span class="n">p_fib_values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">p_fib_values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> 
+        <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">];</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">Result</span><span class="p">){</span> <span class="p">.</span><span class="n">was_error</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">p_fib_values</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="p">};</span>
+
+    <span class="c1">// memory deallocation</span>
+    <span class="n">free</span><span class="p">(</span><span class="n">p_fib_values</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Result</span> <span class="n">fib_0</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="o">!</span><span class="n">fib_0</span><span class="p">.</span><span class="n">was_error</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="n">fib_0</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+
+    <span class="n">Result</span> <span class="n">fib_1</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="o">!</span><span class="n">fib_1</span><span class="p">.</span><span class="n">was_error</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">1</span> <span class="o">==</span> <span class="n">fib_1</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+
+    <span class="n">Result</span> <span class="n">fib_10</span> <span class="o">=</span> <span class="n">fib</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="o">!</span><span class="n">fib_10</span><span class="p">.</span><span class="n">was_error</span><span class="p">);</span>
+    <span class="n">assert</span><span class="p">(</span><span class="mi">55</span> <span class="o">==</span> <span class="n">fib_10</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>Of cource all programmers know this algorithm, but this article is more about showing that good old C programming language can be regarded as a full-fledged programming language for Computer Science tasks.</p>
+  </div>
+
+  <div class="article_meta related">
+    <h3>Category: </h3>
+    <span><a href="./category/algorithms.html">algorithms</span>
+    
+    <h3>Tags:</h3>
+    <span>
+      <a href="./tag/algorithms.html">algorithms</a>,      <a href="./tag/c.html">C</a>    </span>
+  </div>
+
+  <div id="article_comments comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = "polynomial-fibonacci-algorithm.html";
+        (function() {
+             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+             dsq.src = '//ordinary-developer-github-io.disqus.com/embed.js';
+             (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+         })();
+    </script>
+  </div>
+
+
+      <div class="footer">
+<div class="disclaimer">
+  
+    <p>
+      © Tutov Yevgeni,  &mdash; built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="https://github.com/karambir/taman" target="_blank">Taman</a>, a port of jekyll theme <a href="https://github.com/swanson/lagom" target="_blank">Lagom</a>.
+    </p>
+  </div>      </div>
+    </div>
+  </div>
+
+</body>
+</html>
